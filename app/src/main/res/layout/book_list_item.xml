@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/image_book"
+            android:padding="5dp"
             android:gravity="center"
             android:orientation="vertical"
             android:layout_toEndOf="@id/image_book">

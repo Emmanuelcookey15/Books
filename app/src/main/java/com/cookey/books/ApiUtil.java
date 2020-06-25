@@ -24,7 +24,7 @@ public class ApiUtil {
     private static final String KEY = "API_KEY";
     private static final String MAX_RESULT = "maxResults";
     private static final String MAX_VALUE = "40";
-    private static final String API_KEY = "AIzaSyDa9yAauAkab7Qx6ShFSHh1Xd0n421K8WM";
+    private static final String API_KEY = BuildConfig.API_KEY;
     private static final String TITLE = "intitle:";
     private static final String AUTHOR = "inauthor:";
     private static final String PUBLISHER = "inpublisher:";

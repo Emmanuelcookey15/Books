@@ -8,7 +8,7 @@
     <data>
         <variable
             name="Book"
-            type="com.example.books.Book"/>
+            type="com.cookey.books.Book"/>
 
     </data>
 
@@ -112,6 +112,7 @@
                 android:layout_marginTop="@dimen/standard_margin"
                 android:layout_marginEnd="@dimen/standard_margin"
                 android:layout_marginRight="@dimen/standard_margin"
+                android:padding="@dimen/standard_margin"
                 android:text="@{Book.description}"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"

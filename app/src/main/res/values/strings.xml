@@ -11,4 +11,5 @@
     <string name="hint_title">Insert Title</string>
     <string name="hint_ISBN">Insert ISBN</string>
     <string name="advanced_search">Advanced Search</string>
+    <string name="changed_status">Please check your internet connection</string>
 </resources>

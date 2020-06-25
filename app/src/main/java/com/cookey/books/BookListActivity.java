@@ -1,20 +1,23 @@
-package com.example.books;
+package com.cookey.books;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.core.view.MenuItemCompat;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,11 +27,19 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
 
     private ProgressBar mLoadngProgress;
     private RecyclerView rvResult;
+    private TextView tvStatus;
+
+    Context ctx;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_book);
+
+        ctx = this;
+
+        tvStatus = findViewById(R.id.tv_status);
         rvResult = findViewById(R.id.rv_books);
         mLoadngProgress = findViewById(R.id.pb_loading);
         LinearLayoutManager bookLayoutManager = new LinearLayoutManager(this);
@@ -37,18 +48,36 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
         String query = intent.getStringExtra("query");
         URL bookURL;
         try {
-            if (query==null || query.isEmpty()){
-                bookURL = ApiUtil.buildURL("cooking");
+
+            if(isOnline()) {
+                if (query == null || query.isEmpty()) {
+                    bookURL = ApiUtil.buildURL("technology+relationship+business+money");
+                } else {
+                    bookURL = new URL(query);
+                }
+
+                new BookQueryTask().execute(bookURL);
             }else{
-                bookURL = new URL(query);
+                tvStatus.setText(R.string.changed_status);
             }
-
-            new BookQueryTask().execute(bookURL);
-
         } catch (Exception e) {
             Log.d("error", e.getMessage());
         }
     }
+
+
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,6 +136,7 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
 
         @Override
         protected void onPostExecute(String result) {
+            tvStatus.setVisibility(View.INVISIBLE);
             TextView tvError = findViewById(R.id.tv_error);
             mLoadngProgress.setVisibility(View.INVISIBLE);
             if (result == null){
@@ -117,7 +147,7 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
                 rvResult.setVisibility(View.VISIBLE);
                 ArrayList<Book> books = ApiUtil.getBookFromJson(result);
                 String resultString = "";
-                BooksAdapter booksAdapter = new BooksAdapter(books);
+                BooksAdapter booksAdapter = new BooksAdapter(books, ctx);
                 rvResult.setAdapter(booksAdapter);
             }
 

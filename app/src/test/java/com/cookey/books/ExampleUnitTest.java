@@ -1,4 +1,4 @@
-package com.example.books;
+package com.cookey.books;
 
 import org.junit.Test;
 

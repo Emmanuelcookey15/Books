@@ -1,4 +1,4 @@
-package com.example.books;
+package com.cookey.books;
 
 import android.content.Intent;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
 
 import java.net.URL;
 
@@ -36,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
                 }else{
                     URL queryUrl = ApiUtil.buildURL(title, author, publisher, isbn);
                     Intent intent = new Intent(SearchActivity.this, BookListActivity.class);
-                    intent.putExtra("query", queryUrl);
+                    intent.putExtra("query", queryUrl.toString());
                     startActivity(intent);
                 }
             }

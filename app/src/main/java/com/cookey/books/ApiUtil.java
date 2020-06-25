@@ -1,4 +1,4 @@
-package com.example.books;
+package com.cookey.books;
 
 import android.net.Uri;
 import android.util.Log;
@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,6 +22,8 @@ public class ApiUtil {
 
     private static final String QUERY_PARAMETER_KEY = "q";
     private static final String KEY = "API_KEY";
+    private static final String MAX_RESULT = "maxResults";
+    private static final String MAX_VALUE = "40";
     private static final String API_KEY = "AIzaSyDa9yAauAkab7Qx6ShFSHh1Xd0n421K8WM";
     private static final String TITLE = "intitle:";
     private static final String AUTHOR = "inauthor:";
@@ -39,6 +39,7 @@ public class ApiUtil {
         Uri uri = Uri.parse(BASE_API_URL).buildUpon()
                 .appendQueryParameter(QUERY_PARAMETER_KEY, title)
                 .appendQueryParameter(KEY, API_KEY)
+                .appendQueryParameter(MAX_RESULT, MAX_VALUE)
                 .build();
 
         try{

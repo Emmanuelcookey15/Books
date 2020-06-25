@@ -1,21 +1,29 @@
-package com.example.books;
+package com.cookey.books;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> implements View.OnClickListener {
 
     ArrayList<Book> books;
+    Context context;
 
-    public BooksAdapter(ArrayList<Book> books) {
+    public BooksAdapter(ArrayList<Book> books, Context ctx) {
         this.books = books;
+        this.context = ctx;
     }
 
 
@@ -50,6 +58,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         TextView tvAuthor;
         TextView tvDate;
         TextView tvPublisher;
+        ImageView tvImage;
+        CardView tvCardView;
 
         public BookViewHolder(View itemView) {
             super(itemView);
@@ -57,6 +67,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             tvAuthor = itemView.findViewById(R.id.tv_authors);
             tvPublisher = itemView.findViewById(R.id.tv_publisher);
             tvDate = itemView.findViewById(R.id.tv_date);
+            tvImage = itemView.findViewById(R.id.image_book);
+            tvCardView = itemView.findViewById(R.id.theCard);
             itemView.setOnClickListener(this);
         }
 
@@ -65,6 +77,26 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             tvAuthor.setText(book.author);
             tvPublisher.setText(book.publisher);
             tvDate.setText(book.publishedDate);
+            if(!book.thumbnail.isEmpty()) {
+                Picasso.get()
+                        .load(book.thumbnail)
+                        .placeholder(R.drawable.book_open)
+                        .into(tvImage);
+            }else{
+                tvImage.setBackgroundResource(R.drawable.book_open);
+            }
+
+            if(getAdapterPosition() % 5 == 0){
+                tvCardView.setCardBackgroundColor(ContextCompat.getColor(context,R.color.color1));
+            }else if(getAdapterPosition() % 5 == 1){
+                tvCardView.setCardBackgroundColor(ContextCompat.getColor(context,R.color.color2));
+            }else if(getAdapterPosition() % 5 == 2){
+                tvCardView.setCardBackgroundColor(ContextCompat.getColor(context,R.color.color3));
+            }else if(getAdapterPosition() % 5 == 3){
+                tvCardView.setCardBackgroundColor(ContextCompat.getColor(context,R.color.color4));
+            }else if(getAdapterPosition() % 5 == 4){
+                tvCardView.setCardBackgroundColor(ContextCompat.getColor(context,R.color.color5));
+            }
 
         }
 

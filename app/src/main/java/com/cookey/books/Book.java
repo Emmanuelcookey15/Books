@@ -1,4 +1,4 @@
-package com.example.books;
+package com.cookey.books;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -72,7 +72,7 @@ public class Book implements Parcelable {
     @BindingAdapter({"android:imageUrl"})
     public static void loadImage(ImageView view, String imageUrl){
         if(!imageUrl.isEmpty()) {
-            Picasso.with(view.getContext())
+            Picasso.get()
                     .load(imageUrl)
                     .placeholder(R.drawable.book_open)
                     .into(view);
